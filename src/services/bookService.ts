@@ -11,7 +11,11 @@ export class BookService {
   }
 
   async getAllBooks() {
-    const books = await this.bookRepository.find();
+    const books = await this.bookRepository
+      .createQueryBuilder("book")
+      .select(["book.id", "book.name"])
+      .getMany();
+
     return books;
   }
 
